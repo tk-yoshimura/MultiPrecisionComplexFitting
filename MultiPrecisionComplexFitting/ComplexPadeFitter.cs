@@ -121,10 +121,7 @@ namespace MultiPrecisionComplexFitting {
             for (int i = numer, n = dim; i < n; i++) {
                 for (int j = 0; j < numer; j++) {
                     m[i, j] = -sum_table[j + 1, i - numer, 0, 1];
-
-                    if (i != j) {
-                        m[j, i] = Complex<N>.Conjugate(m[i, j]);
-                    }
+                    m[j, i] = Complex<N>.Conjugate(m[i, j]);
                 }
             }
             for (int i = numer, n = dim; i < n; i++) {
