@@ -71,7 +71,13 @@ namespace MultiPrecisionComplexFitting {
             }
 
             if (intercept is null) {
-                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v);
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+#if DEBUG
+                    enable_check_hermitian: true
+#else
+                    enable_check_hermitian: false
+#endif
+                );
 
                 ComplexVector<N> parameters = ComplexVector<N>.Concat(x[..Numer], 1, x[Numer..]);
 
@@ -81,7 +87,13 @@ namespace MultiPrecisionComplexFitting {
                 v = v[1..] - intercept * m[0, 1..].Conj;
                 m = m[1.., 1..];
 
-                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v);
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+#if DEBUG
+                    enable_check_hermitian: true
+#else
+                    enable_check_hermitian: false
+#endif
+                );
 
                 ComplexVector<N> parameters = ComplexVector<N>.Concat(intercept, x[..(Numer - 1)], 1, x[(Numer - 1)..]);
 

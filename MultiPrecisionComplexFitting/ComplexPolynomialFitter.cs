@@ -2,6 +2,7 @@
 using MultiPrecisionAlgebra;
 using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
+using System.Diagnostics;
 
 namespace MultiPrecisionComplexFitting {
 
@@ -37,12 +38,29 @@ namespace MultiPrecisionComplexFitting {
             (ComplexMatrix<N> m, ComplexVector<N> v) = GenerateTable(sum_table, Degree, enable_intercept: intercept is null);
 
             if (intercept is null) {
-                ComplexVector<N> parameters = ComplexMatrix<N>.SolvePositiveSymmetric(m, v);
+
+                ComplexVector<N> parameters = ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+#if DEBUG
+                    enable_check_hermitian: true
+#else
+                    enable_check_hermitian: false
+#endif
+                );
 
                 return parameters;
             }
             else {
-                ComplexVector<N> parameters = ComplexVector<N>.Concat(intercept, ComplexMatrix<N>.SolvePositiveSymmetric(m, v));
+
+                ComplexVector<N> parameters = ComplexVector<N>.Concat(
+                    intercept, 
+                    ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+#if DEBUG
+                    enable_check_hermitian: true
+#else
+                    enable_check_hermitian: false
+#endif
+                    )
+                );
 
                 return parameters;
             }
