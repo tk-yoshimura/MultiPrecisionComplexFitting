@@ -2,7 +2,6 @@
 using MultiPrecisionAlgebra;
 using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MultiPrecisionComplexFitting {
     public class ComplexPadeFitter<N> : ComplexFitter<N> where N : struct, IConstant {

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MultiPrecision;
+﻿using MultiPrecision;
 using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
 using MultiPrecisionComplexFitting;
@@ -14,10 +13,10 @@ namespace MultiPrecisionComplexFittingTests {
             ];
             Complex<Pow2.N4> s(int xn, int xn_conj, int yn, int yn_conj) {
                 return (new ComplexVector<Pow2.N4>(vs.Select(
-                    v => 
-                    Complex<Pow2.N4>.Pow(v.x, xn) * 
-                    Complex<Pow2.N4>.Pow(Complex<Pow2.N4>.Conjugate(v.x), xn_conj) * 
-                    Complex<Pow2.N4>.Pow(v.y, yn) * 
+                    v =>
+                    Complex<Pow2.N4>.Pow(v.x, xn) *
+                    Complex<Pow2.N4>.Pow(Complex<Pow2.N4>.Conjugate(v.x), xn_conj) *
+                    Complex<Pow2.N4>.Pow(v.y, yn) *
                     Complex<Pow2.N4>.Pow(Complex<Pow2.N4>.Conjugate(v.y), yn_conj)
                 ))).Sum;
             };
@@ -43,10 +42,10 @@ namespace MultiPrecisionComplexFittingTests {
             ];
             Complex<Pow2.N4> s(int xn, int xn_conj, int yn, int yn_conj) {
                 return (new ComplexVector<Pow2.N4>(vs.Select(
-                    v => 
-                    Complex<Pow2.N4>.Pow(v.x, xn) * 
-                    Complex<Pow2.N4>.Pow(Complex<Pow2.N4>.Conjugate(v.x), xn_conj) * 
-                    Complex<Pow2.N4>.Pow(v.y, yn) * 
+                    v =>
+                    Complex<Pow2.N4>.Pow(v.x, xn) *
+                    Complex<Pow2.N4>.Pow(Complex<Pow2.N4>.Conjugate(v.x), xn_conj) *
+                    Complex<Pow2.N4>.Pow(v.y, yn) *
                     Complex<Pow2.N4>.Pow(Complex<Pow2.N4>.Conjugate(v.y), yn_conj)
                 ))).Sum;
             };
