@@ -2,18 +2,19 @@
 using MultiPrecisionAlgebra;
 using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MultiPrecisionComplexFitting {
     public class ComplexPadeFitter<N> : ComplexFitter<N> where N : struct, IConstant {
 
         private readonly ComplexSumTable<N> sum_table;
-        private readonly MultiPrecision<N>? intercept;
+        private readonly Complex<N>? intercept;
 
         public int Numer { get; private set; }
 
         public int Denom { get; private set; }
 
-        public ComplexPadeFitter(ComplexVector<N> xs, ComplexVector<N> ys, int numer, int denom, MultiPrecision<N>? intercept = null)
+        public ComplexPadeFitter(ComplexVector<N> xs, ComplexVector<N> ys, int numer, int denom, Complex<N>? intercept = null)
             : base(xs, ys,
                   parameters:
                   (numer >= 2 && denom >= 2)
@@ -26,7 +27,7 @@ namespace MultiPrecisionComplexFitting {
             this.Denom = denom;
         }
 
-        public ComplexPadeFitter(ComplexSumTable<N> sum_table, int numer, int denom, MultiPrecision<N>? intercept = null)
+        public ComplexPadeFitter(ComplexSumTable<N> sum_table, int numer, int denom, Complex<N>? intercept = null)
             : base(sum_table.X, sum_table.Y,
                   parameters:
                   (numer >= 2 && denom >= 2)
@@ -63,7 +64,7 @@ namespace MultiPrecisionComplexFitting {
             (ComplexMatrix<N> m, ComplexVector<N> v) = GenerateTable(sum_table, Numer, Denom);
 
             if (norm_cost is not null) {
-                Complex<N> c = norm_cost * sum_table[0, 0];
+                Complex<N> c = norm_cost * sum_table[0, 0, 0, 0];
 
                 for (int i = 0; i < m.Rows; i++) {
                     m[i, i] += c;
@@ -71,17 +72,17 @@ namespace MultiPrecisionComplexFitting {
             }
 
             if (intercept is null) {
-                ComplexVector<N> x = ComplexMatrix<N>.Solve(m, v);
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v);
 
                 ComplexVector<N> parameters = ComplexVector<N>.Concat(x[..Numer], 1, x[Numer..]);
 
                 return parameters;
             }
             else {
-                v = v[1..] - intercept * m[0, 1..];
+                v = v[1..] - intercept * m[0, 1..].Conj;
                 m = m[1.., 1..];
 
-                ComplexVector<N> x = ComplexMatrix<N>.Solve(m, v);
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v);
 
                 ComplexVector<N> parameters = ComplexVector<N>.Concat(intercept, x[..(Numer - 1)], 1, x[(Numer - 1)..]);
 
@@ -95,26 +96,44 @@ namespace MultiPrecisionComplexFitting {
             Complex<N>[,] m = new Complex<N>[dim, dim];
             for (int i = 0, n = numer; i < n; i++) {
                 for (int j = i; j < n; j++) {
-                    m[i, j] = m[j, i] = sum_table[i + j, 0];
+                    m[i, j] = sum_table[j, i, 0, 0];
+
+                    if (i != j) {
+                        m[j, i] = Complex<N>.Conjugate(m[i, j]);
+                    }
+                    else {
+                        m[j, i] = m[j, i].R;
+                    }
                 }
             }
             for (int i = numer, n = dim; i < n; i++) {
                 for (int j = 0; j < numer; j++) {
-                    m[i, j] = m[j, i] = -sum_table[i + j - numer + 1, 1];
+                    m[i, j] = -sum_table[j + 1, i - numer, 0, 1];
+
+                    if (i != j) {
+                        m[j, i] = Complex<N>.Conjugate(m[i, j]);
+                    }
                 }
             }
             for (int i = numer, n = dim; i < n; i++) {
                 for (int j = i; j < n; j++) {
-                    m[i, j] = m[j, i] = sum_table[i + j - 2 * numer + 2, 2];
+                    m[i, j] = sum_table[j - numer + 1, i - numer + 1, 1, 1];
+
+                    if (i != j) {
+                        m[j, i] = Complex<N>.Conjugate(m[i, j]);
+                    }
+                    else {
+                        m[j, i] = m[j, i].R;
+                    }
                 }
             }
 
             Complex<N>[] v = new Complex<N>[numer + denom - 1];
             for (int i = 0; i < numer; i++) {
-                v[i] = sum_table[i, 1];
+                v[i] = sum_table[0, i, 1, 0];
             }
             for (int i = numer; i < dim; i++) {
-                v[i] = -sum_table[i - numer + 1, 2];
+                v[i] = -sum_table[1, i - numer, 1, 1];
             }
 
             return (m, v);

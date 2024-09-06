@@ -4,22 +4,22 @@ using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
 using MultiPrecisionComplexFitting;
 
-namespace MultiPrecisionCurveFitting.Tests {
+namespace MultiPrecisionComplexFittingTests {
     [TestClass()]
     public class ComplexPadeFitterTests {
         [TestMethod()]
         public void FitWithInterceptTest() {
-            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-8, 8), (-8, 8)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25, xs);
+            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
 
-            ComplexPadeFitter<Pow2.N8> fitter = new(xs, ys, intercept: 0.75, numer: 8, denom: 6);
+            ComplexPadeFitter<Pow2.N8> fitter = new(xs, ys, intercept: 0.75 + Complex<Pow2.N8>.ImaginaryOne, numer: 8, denom: 6);
 
             ComplexVector<Pow2.N8> parameters = fitter.Fit();
 
             Console.WriteLine($"Numer : {parameters[..fitter.Numer]}");
             Console.WriteLine($"Denom : {parameters[fitter.Numer..]}");
 
-            Assert.AreEqual(0.75, fitter.Regress(0, parameters));
+            Assert.AreEqual(0.75 + Complex<Pow2.N8>.ImaginaryOne, fitter.Regress(0, parameters));
 
             for (int i = 0; i < xs.Length; i++) {
                 Assert.IsTrue(MultiPrecision<Pow2.N8>.Abs(ys[i].R - fitter.Regress(xs[i], parameters).R) < 1e-5,
@@ -35,8 +35,8 @@ namespace MultiPrecisionCurveFitting.Tests {
 
         [TestMethod()]
         public void FitWithoutInterceptTest() {
-            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-8, 8), (-8, 8)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25, xs);
+            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
 
             ComplexPadeFitter<Pow2.N8> fitter = new(xs, ys, numer: 8, denom: 6);
 
@@ -59,21 +59,21 @@ namespace MultiPrecisionCurveFitting.Tests {
 
         [TestMethod()]
         public void ExecuteWeightedFittingWithInterceptTest() {
-            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-8, 8), (-8, 8)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25, xs);
+            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
             MultiPrecision<Pow2.N8>[] ws = Vector<Pow2.N8>.Fill(xs.Length, value: 0.5);
 
             ys[256] = 1e+8;
             ws[256] = 0;
 
-            ComplexPadeFitter<Pow2.N8> fitter = new(xs, ys, intercept: 0.75, numer: 8, denom: 6);
+            ComplexPadeFitter<Pow2.N8> fitter = new(xs, ys, intercept: 0.75 + Complex<Pow2.N8>.ImaginaryOne, numer: 8, denom: 6);
 
             ComplexVector<Pow2.N8> parameters = fitter.Fit(ws);
 
             Console.WriteLine($"Numer : {parameters[..fitter.Numer]}");
             Console.WriteLine($"Denom : {parameters[fitter.Numer..]}");
 
-            Assert.AreEqual(0.75, fitter.Regress(0, parameters));
+            Assert.AreEqual(0.75 + Complex<Pow2.N8>.ImaginaryOne, fitter.Regress(0, parameters));
 
             for (int i = 0; i < xs.Length; i++) {
                 if (i == 256) {
@@ -91,8 +91,8 @@ namespace MultiPrecisionCurveFitting.Tests {
 
         [TestMethod()]
         public void ExecuteWeightedFittingWithoutInterceptTest() {
-            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-8, 8), (-8, 8)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25, xs);
+            Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
             MultiPrecision<Pow2.N8>[] ws = Vector<Pow2.N8>.Fill(xs.Length, value: 0.5);
 
             ys[256] = 1e+8;

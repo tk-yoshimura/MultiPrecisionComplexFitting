@@ -62,6 +62,9 @@ namespace MultiPrecisionComplexFitting {
                         if (i != j) {
                             m[j, i] = Complex<N>.Conjugate(m[i, j]);
                         }
+                        else {
+                            m[j, i] = m[j, i].R;
+                        }
                     }
                 }
 
@@ -76,6 +79,9 @@ namespace MultiPrecisionComplexFitting {
 
                         if (i != j) {
                             m[j, i] = Complex<N>.Conjugate(m[i, j]);
+                        }
+                        else {
+                            m[j, i] = m[j, i].R;
                         }
                     }
                 }
