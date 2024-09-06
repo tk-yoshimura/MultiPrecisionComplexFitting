@@ -10,7 +10,7 @@ namespace MultiPrecisionComplexFittingTests {
         [TestMethod()]
         public void FitWithInterceptTest() {
             Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x * (1, 2)) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
 
             ComplexPolynomialFitter<Pow2.N8> fitter = new(xs, ys, intercept: 0.75 + Complex<Pow2.N8>.ImaginaryOne, degree: 16);
 
@@ -35,7 +35,7 @@ namespace MultiPrecisionComplexFittingTests {
         [TestMethod()]
         public void FitWithoutInterceptTest() {
             Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x * (1, 2)) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
 
             ComplexPolynomialFitter<Pow2.N8> fitter = new(xs, ys, degree: 16);
 
@@ -58,7 +58,7 @@ namespace MultiPrecisionComplexFittingTests {
         [TestMethod()]
         public void ExecuteWeightedFittingWithInterceptTest() {
             Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x * (1, 2)) - 0.25 + Complex<Pow2.N8>.ImaginaryOne, xs);
             MultiPrecision<Pow2.N8>[] ws = Vector<Pow2.N8>.Fill(xs.Length, value: 0.5);
 
             ys[256] = 1e+8;
@@ -89,7 +89,7 @@ namespace MultiPrecisionComplexFittingTests {
         [TestMethod()]
         public void ExecuteWeightedFittingWithoutInterceptTest() {
             Complex<Pow2.N8>[] xs = ComplexMatrix<Pow2.N8>.Flatten(ComplexMatrix<Pow2.N8>.Grid((-7, 9), (-6, 10)) / 16);
-            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x) - 0.25, xs);
+            Complex<Pow2.N8>[] ys = ComplexVector<Pow2.N8>.Func(x => Complex<Pow2.N8>.Cos(x * (1, 2)) - 0.25, xs);
             MultiPrecision<Pow2.N8>[] ws = Vector<Pow2.N8>.Fill(xs.Length, value: 0.5);
 
             ys[256] = 1e+8;

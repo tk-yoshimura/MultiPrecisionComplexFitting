@@ -2,10 +2,12 @@
 using MultiPrecisionAlgebra;
 using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
+using System;
+using System.Collections.Generic;
 
 namespace MultiPrecisionComplexFitting {
     public class ComplexSumTable<N> where N : struct, IConstant {
-        private readonly List<ComplexVector<N>> xs = new(), ys = new(), xs_conj = new(), ys_conj = new();
+        private readonly List<ComplexVector<N>> xs = [], ys = [], xs_conj = [], ys_conj = [];
         private Dictionary<(int xn, int xn_conj, int yn, int yn_conj), Complex<N>> table;
 
         private Vector<N>? w = null;

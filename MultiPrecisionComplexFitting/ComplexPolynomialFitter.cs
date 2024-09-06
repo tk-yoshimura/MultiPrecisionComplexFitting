@@ -2,7 +2,8 @@
 using MultiPrecisionAlgebra;
 using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
-using System.Diagnostics;
+using System;
+using System.Linq;
 
 namespace MultiPrecisionComplexFitting {
 
@@ -39,7 +40,7 @@ namespace MultiPrecisionComplexFitting {
 
             if (intercept is null) {
 
-                ComplexVector<N> parameters = ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+                ComplexVector<N> parameters = ComplexMatrix<N>.SolvePositiveSymmetric(m, v,
 #if DEBUG
                     enable_check_hermitian: true
 #else
@@ -52,8 +53,8 @@ namespace MultiPrecisionComplexFitting {
             else {
 
                 ComplexVector<N> parameters = ComplexVector<N>.Concat(
-                    intercept, 
-                    ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+                    intercept,
+                    ComplexMatrix<N>.SolvePositiveSymmetric(m, v,
 #if DEBUG
                     enable_check_hermitian: true
 #else

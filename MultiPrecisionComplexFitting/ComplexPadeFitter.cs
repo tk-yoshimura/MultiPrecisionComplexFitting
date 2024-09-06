@@ -2,6 +2,7 @@
 using MultiPrecisionAlgebra;
 using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
+using System;
 
 namespace MultiPrecisionComplexFitting {
     public class ComplexPadeFitter<N> : ComplexFitter<N> where N : struct, IConstant {
@@ -71,7 +72,7 @@ namespace MultiPrecisionComplexFitting {
             }
 
             if (intercept is null) {
-                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v,
 #if DEBUG
                     enable_check_hermitian: true
 #else
@@ -87,7 +88,7 @@ namespace MultiPrecisionComplexFitting {
                 v = v[1..] - intercept * m[0, 1..].Conj;
                 m = m[1.., 1..];
 
-                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v, 
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v,
 #if DEBUG
                     enable_check_hermitian: true
 #else
