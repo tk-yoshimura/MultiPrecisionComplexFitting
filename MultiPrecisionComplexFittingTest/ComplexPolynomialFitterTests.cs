@@ -4,7 +4,7 @@ using MultiPrecisionComplex;
 using MultiPrecisionComplexAlgebra;
 using MultiPrecisionComplexFitting;
 
-namespace MultiPrecisionCurveFitting.Tests {
+namespace MultiPrecisionComplexFittingTests {
     [TestClass()]
     public class ComplexPolynomialFitterTests {
         [TestMethod()]
