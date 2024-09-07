@@ -95,6 +95,10 @@ namespace MultiPrecisionComplexFitting {
         public Vector<N>? W {
             get => w;
             set {
+                if (ReferenceEquals(this.w, w)) {
+                    return;
+                }
+
                 if (value is not null && xs[0].Dim != value.Dim) {
                     throw new ArgumentException("invalid size", nameof(W));
                 }
