@@ -72,7 +72,7 @@ namespace MultiPrecisionComplexFitting {
             }
 
             if (intercept is null) {
-                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v,
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveHermitian(m, v,
 #if DEBUG
                     enable_check_hermitian: true
 #else
@@ -88,7 +88,7 @@ namespace MultiPrecisionComplexFitting {
                 v = v[1..] - intercept * m[0, 1..].Conj;
                 m = m[1.., 1..];
 
-                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveSymmetric(m, v,
+                ComplexVector<N> x = ComplexMatrix<N>.SolvePositiveHermitian(m, v,
 #if DEBUG
                     enable_check_hermitian: true
 #else
@@ -111,7 +111,7 @@ namespace MultiPrecisionComplexFitting {
                     m[i, j] = sum_table[j, i, 0, 0];
 
                     if (i != j) {
-                        m[j, i] = Complex<N>.Conjugate(m[i, j]);
+                        m[j, i] = m[i, j].Conj;
                     }
                     else {
                         m[j, i] = m[j, i].R;
@@ -121,7 +121,7 @@ namespace MultiPrecisionComplexFitting {
             for (int i = numer, n = dim; i < n; i++) {
                 for (int j = 0; j < numer; j++) {
                     m[i, j] = -sum_table[j + 1, i - numer, 0, 1];
-                    m[j, i] = Complex<N>.Conjugate(m[i, j]);
+                    m[j, i] = m[i, j].Conj;
                 }
             }
             for (int i = numer, n = dim; i < n; i++) {
@@ -129,7 +129,7 @@ namespace MultiPrecisionComplexFitting {
                     m[i, j] = sum_table[j - numer + 1, i - numer + 1, 1, 1];
 
                     if (i != j) {
-                        m[j, i] = Complex<N>.Conjugate(m[i, j]);
+                        m[j, i] = m[i, j].Conj;
                     }
                     else {
                         m[j, i] = m[j, i].R;
