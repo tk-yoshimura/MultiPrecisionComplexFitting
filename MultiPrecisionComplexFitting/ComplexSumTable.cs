@@ -95,7 +95,7 @@ namespace MultiPrecisionComplexFitting {
         public Vector<N>? W {
             get => w;
             set {
-                if (ReferenceEquals(this.w, w)) {
+                if (ReferenceEquals(this.w, value)) {
                     return;
                 }
 
