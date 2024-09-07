@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TYoshimura.MultiPrecision" Version="6.3.4" />
+    <PackageReference Include="TYoshimura.MultiPrecision.Algebra" Version="2.2.2" />
+    <PackageReference Include="TYoshimura.MultiPrecision.Complex" Version="1.1.8" />
+    <PackageReference Include="TYoshimura.MultiPrecision.ComplexAlgebra" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MultiPrecisionComplexFitting">
+      <HintPath>..\MultiPrecisionComplexFitting\bin\Debug\net8.0\MultiPrecisionComplexFitting.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
