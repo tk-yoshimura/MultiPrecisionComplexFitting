@@ -1,6 +1,5 @@
 ﻿using MultiPrecision;
 using MultiPrecisionComplex;
-using MultiPrecisionComplexAlgebra;
 using MultiPrecisionComplexFitting;
 
 namespace MultiPrecisionComplexFittingTests {

@@ -230,7 +230,7 @@ namespace MultiPrecisionComplexFittingTests {
                 );
             }
         }
-                
+
         [TestMethod()]
         public void FitWithInterceptImagTest() {
             Complex<Pow2.N8>[] xs = (ComplexVector<Pow2.N8>)Vector<Pow2.N8>.Arange(0, 256) / 256;
