@@ -56,5 +56,6 @@ nugetpack.bat
 
 # Resource AutoGen
 DoubleDouble/Resource.Designer.cs
+results_disused
 
 # Safelist
