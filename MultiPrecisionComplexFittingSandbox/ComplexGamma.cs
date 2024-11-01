@@ -34,7 +34,7 @@ namespace MultiPrecisionComplexFittingSandbox {
 
         public static Complex<Pow2.N16> Gamma(Complex<Pow2.N16> z) {
             if (z.R < MultiPrecision<Pow2.N16>.Point5) {
-                Complex<Pow2.N16> y = MultiPrecision<Pow2.N16>.PI / (Complex<Pow2.N16>.SinPI(z) * Gamma(1 - z));
+                Complex<Pow2.N16> y = MultiPrecision<Pow2.N16>.Pi / (Complex<Pow2.N16>.SinPi(z) * Gamma(1 - z));
 
                 return y;
             }
@@ -43,7 +43,7 @@ namespace MultiPrecisionComplexFittingSandbox {
                 Complex<Pow2.N16> s = StirlingTerm(z);
 
                 Complex<Pow2.N16> y =
-                    Complex<Pow2.N16>.Sqrt(2 * MultiPrecision<Pow2.N16>.PI / z) *
+                    Complex<Pow2.N16>.Sqrt(2 * MultiPrecision<Pow2.N16>.Pi / z) *
                     Complex<Pow2.N16>.Pow(z / MultiPrecision<Pow2.N16>.E, z) *
                     Complex<Pow2.N16>.Exp(s);
 
@@ -53,7 +53,7 @@ namespace MultiPrecisionComplexFittingSandbox {
             if (z.Norm > stirling_convergence_norm) {
                 Complex<Pow2.N16> s = StirlingTerm(z);
                 Complex<Pow2.N16> y =
-                    Complex<Pow2.N16>.Sqrt(2 * MultiPrecision<Pow2.N16>.PI / z) *
+                    Complex<Pow2.N16>.Sqrt(2 * MultiPrecision<Pow2.N16>.Pi / z) *
                     Complex<Pow2.N16>.Pow(z / MultiPrecision<Pow2.N16>.E, z) *
                     Complex<Pow2.N16>.Exp(s);
 

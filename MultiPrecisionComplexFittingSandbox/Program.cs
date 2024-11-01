@@ -7,15 +7,15 @@ using MultiPrecisionCurveFitting;
 namespace MultiPrecisionComplexFittingSandbox {
     internal class Program {
         static void Main() {
-            ComplexVector<Pow2.N16> xs = ComplexMatrix<Pow2.N16>.Flatten(ComplexMatrix<Pow2.N16>.Grid((-32, 32), (-32, 32)) / 64);
-            ComplexVector<Pow2.N16> ys = (x => ComplexGammaN16.Gamma(x + (1, 1.5)), xs);
+            ComplexVector<Pow2.N16> xs = ComplexMatrix<Pow2.N16>.Flatten(ComplexMatrix<Pow2.N16>.Grid((-32, 32), (-32, 32)) / 256);
+            ComplexVector<Pow2.N16> ys = (x => x != 0 ? Complex<Pow2.N16>.Log(1 + x) / x : 1, xs);
 
             ComplexSumTable<Pow2.N64> table = new(xs.Convert<Pow2.N64>(), ys.Convert<Pow2.N64>());
 
             bool finished = false; 
             for (int coefs = 5; coefs <= 256 && !finished; coefs++) {
                 foreach ((int m, int n) in CurveFittingUtils.EnumeratePadeDegree(coefs, 2)) {
-                    ComplexPadeFitter<Pow2.N64> pade = new(table, m, n);
+                    ComplexPadeFitter<Pow2.N64> pade = new(table, m, n, intercept: 1);
 
                     ComplexVector<Pow2.N64> param = pade.Fit();
                     ComplexVector<Pow2.N64> errs = pade.Error(param);
@@ -27,19 +27,19 @@ namespace MultiPrecisionComplexFittingSandbox {
                     Console.WriteLine($"m={m},n={n}");
                     Console.WriteLine($"{max_rateerr:e20}");
 
-                    if (max_rateerr > "1e-12") {
+                    if (max_rateerr > "1e-25") {
                         coefs += 4;
                         break;
                     }
 
-                    if (max_rateerr < "1e-20") {
+                    if (max_rateerr < "1e-40") {
                         break;
                     }
 
-                    if (max_rateerr < "1e-16") {
+                    if (max_rateerr < "1e-30") {
                         finished = true;
 
-                        using (StreamWriter sw = new("../../../../results_disused/complex_gamma_precision16.csv")) {
+                        using (StreamWriter sw = new("../../../../results_disused/complex_log_precision16.csv")) {
                             sw.WriteLine($"x=[{xs[0]},{xs[^1]}]");
                             sw.WriteLine($"samples={xs.Dim}");
                             sw.WriteLine($"m={m},n={n}");
