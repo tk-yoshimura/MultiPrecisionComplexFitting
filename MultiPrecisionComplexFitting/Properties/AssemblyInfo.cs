@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MultiPrecisionComplexFitting")]
-[assembly: AssemblyCopyright("Copyright © T.Yoshimura 2024")]
+[assembly: AssemblyCopyright("Copyright © T.Yoshimura 2024-2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -14,4 +14,4 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("0D4561A9-1BEE-41D5-9F4F-03C9F9A94482")]
 
-[assembly: AssemblyVersion("1.1.1.*")]
+[assembly: AssemblyVersion("2.0.0.*")]
